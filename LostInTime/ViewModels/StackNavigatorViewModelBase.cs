@@ -9,7 +9,7 @@ namespace LostInTime.ViewModels
 {
     public abstract partial class StackNavigatorViewModelBase : ViewModelBase, INavigator
     {
-        private readonly INavigationResolver navigationResolver;
+        protected readonly INavigationResolver navigationResolver;
 
         protected StackNavigatorViewModelBase(INavigationResolver navigationResolver)
         {

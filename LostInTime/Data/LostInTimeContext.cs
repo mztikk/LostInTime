@@ -20,6 +20,14 @@ namespace LostInTime.Data
         public DbSet<Character> Characters { get; set; }
         public DbSet<TemplateGroup> TemplateGroups { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<CheckBoxTemplateGroupItem>();
+            modelBuilder.Entity<TextTemplateGroupItem>();
+        }
+
         public LostInTimeContext CreateDbContext(string[] args)
         {
             Environment.SpecialFolder folder = Environment.SpecialFolder.LocalApplicationData;

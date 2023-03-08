@@ -22,9 +22,9 @@ namespace LostInTime.Navigation
             return Task.FromResult(serviceProvider.GetService(type) as ViewModelBase);
         }
 
-        public Task<ViewModelBase?> GetViewModelForType<VM>() where VM : ViewModelBase
+        public Task<VM?> GetViewModelForType<VM>() where VM : ViewModelBase
         {
-            return Task.FromResult<ViewModelBase?>(serviceProvider.GetService<VM>());
+            return Task.FromResult<VM?>(serviceProvider.GetService<VM>());
         }
     }
 }

@@ -79,6 +79,10 @@ namespace LostInTime
                     .AddTransient<CharacterAddView>()
                     .AddTransient<DashboardViewModel>()
                     .AddTransient<DashboardView>()
+                    .AddTransient<TemplateGroupEditorViewModel>()
+                    .AddTransient<TemplateGroupEditorView>()
+                    .AddTransient<StackNavigatorWrapperViewModel>()
+                    .AddTransient<StackNavigatorWrapperView>()
                     .AddTransient<IRepository<Character>, CharacterRepository>()
                     .AddSingleton<ViewLocator>();
 

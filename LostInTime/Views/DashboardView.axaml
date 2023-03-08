@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:LostInTime.ViewModels"
+             xmlns:m="using:LostInTime.Models"
              xmlns:e="using:EventBinder"
              xmlns:converter="using:LostInTime.Converter"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -13,12 +14,16 @@
     <converter:ReturnParameterConverter x:Key="returnParameterConverter"/>
   </UserControl.Resources>
   
-  <TabControl>
-    <TabItem Header="Characters">
-      <TransitioningContentControl Content="{Binding CurrentPage}" AttachedToVisualTree="{e:EventBinding OnTabChanged, {x:Type vm:CharacterStorageViewModel}}"/>
-    </TabItem>
-    <TabItem Header="Daily">
-      <TransitioningContentControl Content="{Binding CurrentPage}" AttachedToVisualTree="{e:EventBinding OnTabChanged, {x:Type vm:CharacterStorageViewModel}}"/>
-    </TabItem>
+  <TabControl Items="{Binding DashboardPages}">
+    <TabControl.ItemTemplate>
+      <DataTemplate>
+        <TextBlock Text="{Binding Header}"/>
+      </DataTemplate>
+    </TabControl.ItemTemplate>
+    <TabControl.ContentTemplate>
+      <DataTemplate x:DataType="m:TabItemModel">
+        <ContentControl Content="{Binding Content}"/>
+      </DataTemplate>
+    </TabControl.ContentTemplate>
   </TabControl>
 </UserControl>
