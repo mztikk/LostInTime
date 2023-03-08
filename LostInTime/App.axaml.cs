@@ -4,6 +4,8 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using LostInTime.Data;
+using LostInTime.Models;
 using LostInTime.Navigation;
 using LostInTime.ViewModels;
 using LostInTime.Views;
@@ -62,7 +64,7 @@ namespace LostInTime
             Environment.SpecialFolder folder = Environment.SpecialFolder.LocalApplicationData;
             string path = Environment.GetFolderPath(folder);
             string dbPath = System.IO.Path.Join(path, "lostintime.db");
-            services.AddDbContext<CharacterContext>(
+            services.AddDbContext<LostInTimeContext>(
             options =>
             {
                 options.UseSqlite($"Data Source={dbPath}");
@@ -77,6 +79,7 @@ namespace LostInTime
                     .AddTransient<CharacterAddView>()
                     .AddTransient<DashboardViewModel>()
                     .AddTransient<DashboardView>()
+                    .AddTransient<IRepository<Character>, CharacterRepository>()
                     .AddSingleton<ViewLocator>();
 
             return services.BuildServiceProvider();

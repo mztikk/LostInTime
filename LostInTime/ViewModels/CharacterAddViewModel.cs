@@ -1,24 +1,23 @@
-﻿using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LostInTime.Data;
 using LostInTime.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace LostInTime.ViewModels
 {
     public partial class CharacterAddViewModel : ViewModelBase
     {
-        private readonly CharacterContext characterContext;
+        private readonly IRepository<Character> characterRepository;
 
-        public CharacterAddViewModel(CharacterContext characterContext)
+        public CharacterAddViewModel(IRepository<Character> characterRepository)
         {
-            this.characterContext = characterContext;
+            this.characterRepository = characterRepository;
         }
 
         [ObservableProperty]
         private string? characterName;
-        
+
         [ObservableProperty]
         private CharacterClass? characterClass;
 
@@ -30,8 +29,7 @@ namespace LostInTime.ViewModels
                 return;
             }
 
-            await characterContext.AddAsync(new Character() { Name = CharacterName, Class = CharacterClass.Value });
-            await characterContext.SaveChangesAsync();
+            await characterRepository.Add(new Character() { Name = CharacterName, Class = CharacterClass.Value });
             await Navigator.NavigateBackAsync();
         }
     }

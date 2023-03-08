@@ -2,17 +2,18 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LostInTime.Data;
 using LostInTime.Models;
 
 namespace LostInTime.ViewModels
 {
     public partial class CharacterStorageViewModel : ViewModelBase
     {
-        private readonly CharacterContext characterContext;
+        private readonly IRepository<Character> characterRepository;
 
-        public CharacterStorageViewModel(CharacterContext characterContext)
+        public CharacterStorageViewModel(IRepository<Character> characterRepository)
         {
-            this.characterContext = characterContext;
+            this.characterRepository = characterRepository;
         }
 
         [ObservableProperty]
@@ -25,16 +26,16 @@ namespace LostInTime.ViewModels
         }
 
         [RelayCommand]
-        private void RemoveCharacter(Character character)
+        private async Task RemoveCharacter(Character character)
         {
-            characterContext.Remove(character);
+            await characterRepository.Delete(character);
             Characters.Remove(character);
-            characterContext.SaveChanges();
         }
 
-        public override async Task OnNavigatedToAsync()
+        public override Task OnNavigatedToAsync()
         {
-            Characters = new(characterContext.Characters);
+            Characters = new(characterRepository.Get());
+            return Task.CompletedTask;
         }
     }
 }

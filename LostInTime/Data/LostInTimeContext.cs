@@ -3,28 +3,29 @@ using LostInTime.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace LostInTime
+namespace LostInTime.Data
 {
-    public class CharacterContext : DbContext, IDesignTimeDbContextFactory<CharacterContext>
+    public class LostInTimeContext : DbContext, IDesignTimeDbContextFactory<LostInTimeContext>
     {
-        public CharacterContext()
+        public LostInTimeContext()
         {
-            
+
         }
 
-        public CharacterContext(DbContextOptions<CharacterContext> options) : base(options)
+        public LostInTimeContext(DbContextOptions<LostInTimeContext> options) : base(options)
         {
 
         }
 
         public DbSet<Character> Characters { get; set; }
+        public DbSet<TemplateGroup> TemplateGroups { get; set; }
 
-        public CharacterContext CreateDbContext(string[] args)
+        public LostInTimeContext CreateDbContext(string[] args)
         {
             Environment.SpecialFolder folder = Environment.SpecialFolder.LocalApplicationData;
             string path = Environment.GetFolderPath(folder);
             string dbPath = System.IO.Path.Join(path, "lostintime.db");
-            DbContextOptionsBuilder<CharacterContext> optionsBuilder = new();
+            DbContextOptionsBuilder<LostInTimeContext> optionsBuilder = new();
             _ = optionsBuilder.UseSqlite($"Data Source={dbPath}");
 
             return new(optionsBuilder.Options);
