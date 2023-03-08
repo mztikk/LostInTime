@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="using:LostInTime.Models"
+             xmlns:converter="using:LostInTime.Converter"
+             xmlns:vm="using:LostInTime.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="LostInTime.Views.CharacterAddView"
+             x:DataType="vm:CharacterAddViewModel"
+             x:CompileBindings="True">
+  <UserControl.Resources>
+    <converter:BoolToCharacterClassConverter x:Key="boolToClassConverter"/>
+  </UserControl.Resources>
+
+  <StackPanel>
+    <TextBox Text="{CompiledBinding CharacterName}" AttachedToVisualTree="CharacterNameTextBoxAttachedToVisualTree"/>
+    <RadioButton GroupName="Class" Content="{x:Static models:CharacterClass.Berserker}" IsChecked="{Binding CharacterClass, Converter={StaticResource boolToClassConverter}, ConverterParameter={x:Static models:CharacterClass.Berserker}}"/>
+    <RadioButton GroupName="Class" Content="{x:Static models:CharacterClass.Destroyer}" IsChecked="{Binding CharacterClass, Converter={StaticResource boolToClassConverter}, ConverterParameter={x:Static models:CharacterClass.Destroyer}}"/>
+    <RadioButton GroupName="Class" Content="{x:Static models:CharacterClass.Reaper}" IsChecked="{Binding CharacterClass, Converter={StaticResource boolToClassConverter}, ConverterParameter={x:Static models:CharacterClass.Reaper}}"/>
+    <Button Command="{CompiledBinding AddCharacterCommand}">Ok</Button>
+  </StackPanel>
+</UserControl>
